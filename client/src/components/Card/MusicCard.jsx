@@ -5,6 +5,7 @@ import { FaPlay, FaPause } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { GrEdit } from "react-icons/gr";
 import { Link } from "react-router-dom";
+import { timeAgo } from "../../utils/timeAgo";
 
 const MusicCard = ({
   url,
@@ -14,6 +15,7 @@ const MusicCard = ({
   onPause,
   image,
   albumId,
+  createdAt,
   _id,
 }) => {
   const dispatch = useDispatch();
@@ -21,6 +23,7 @@ const MusicCard = ({
   const [audio, setAudio] = useState(new Audio(url));
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
+  const [timeago, setTimeago] = useState();
 
   useEffect(() => {
     setAudio(new Audio(url));
@@ -45,6 +48,10 @@ const MusicCard = ({
       return () => clearInterval(intervalId);
     }
   }, [isPlaying]);
+
+  useEffect(() => {
+    setTimeago(timeAgo(new Date(createdAt)));
+  }, []);
 
   const minutes = Math.floor(duration / 60);
   const seconds = Math.round(duration % 60);
@@ -75,7 +82,7 @@ const MusicCard = ({
             <p className="mb-0 text-white opacity-50">
               {formattedDuration} / {formattedCurrentTime}
             </p>
-            <p className="mb-0 text-white opacity-50">1 week ago</p>
+            <p className="mb-0 text-white opacity-50">{timeago}</p>
           </div>
           <button
             className="btn btn-primary"

@@ -5,11 +5,12 @@ import Header from "../components/Header";
 import MusikCard from "../components/Card/MusicCard";
 import Loader from "../components/Loader";
 import { clearErrors, getAlbum } from "../redux/actions/album";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { GrEdit } from "react-icons/gr";
 import { SONG_DELETE_RESET } from "../redux/type/album";
 
 const Album = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const dispatch = useDispatch();
   const alert = useAlert();
@@ -67,12 +68,20 @@ const Album = () => {
                 <div className="col-8 text-white">
                   <h1>{album.name}</h1>
                   <p>{album.description}</p>
-                  <Link
-                    to={`/add-album/${album._id}`}
-                    className="btn btn-warning"
-                  >
-                    <GrEdit fontSize={25} color="#fff" />
-                  </Link>
+                  <div className="d-flex gap-3">
+                    <Link
+                      to={`/add-album/${album._id}`}
+                      className="btn btn-warning"
+                    >
+                      <GrEdit fontSize={25} color="#fff" />
+                    </Link>
+                    <button
+                      onClick={() => navigate(-1)}
+                      className="btn btn-danger"
+                    >
+                      back
+                    </button>
+                  </div>
                 </div>
 
                 <div className="col-12">

@@ -25,10 +25,9 @@ exports.registerSong = catchAsyncErrors(async (req, res, next) => {
 
   const newSong = await SongModel.create({
     ...req.body,
-    album: req.params.id,
   });
 
-  const album = await AlbumModel.findById(req.params.id);
+  const album = await AlbumModel.findById(req.body.album);
   album.songs.push(newSong._id);
   await album.save();
 

@@ -40,7 +40,7 @@ export const createSong = (songData, id, songAdd) => async (dispatch) => {
     let data;
 
     if (songAdd) {
-      data = await axios.post(`api/song/${id}`, songData);
+      data = await axios.post(`api/song`, songData);
     } else {
       data = await axios.put(`api/song/${id}`, songData);
     }

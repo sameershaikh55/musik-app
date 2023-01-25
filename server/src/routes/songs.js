@@ -16,10 +16,9 @@ const {
 router
   .route("/:id")
   .get(getSong)
-  .post(upload.single("image"), registerSong)
   .put(upload.single("image"), editSong)
   .delete(deleteSong);
-
+router.route("/").post(upload.single("image"), registerSong);
 router.route("/audio/:id").post(audioUpload.single("audio"), registerSongAudio);
 
 module.exports = router;

@@ -73,6 +73,7 @@ const AddEditSong = () => {
     if (id) {
       dispatch(createSong(formData, id, false));
     } else {
+      formData.append("album", albumId);
       dispatch(createSong(formData, albumId, true));
     }
   };
@@ -83,7 +84,6 @@ const AddEditSong = () => {
     }
   }, [id]);
 
-  console.log(success);
   useEffect(() => {
     if (error) {
       alert.error(error);

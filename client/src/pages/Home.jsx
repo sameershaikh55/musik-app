@@ -34,9 +34,14 @@ const Home = () => {
       <div className="page_container mt-4">
         <div className="container-fluid">
           <div className="row">
-            {albums.map((content) => {
-              return <AlbumCard key={content.name} {...content} />;
-            })}
+            {(albums.length &&
+              albums.map((content) => {
+                return <AlbumCard key={content.name} {...content} />;
+              })) || (
+              <div className="text-white opacity-50 text-center mt-5">
+                no data found
+              </div>
+            )}
           </div>
         </div>
       </div>

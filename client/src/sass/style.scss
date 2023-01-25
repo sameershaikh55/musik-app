@@ -190,6 +190,14 @@ body {
       object-fit: cover;
     }
 
+    p {
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2; /* start showing ellipsis when 3rd line is reached */
+      white-space: pre-wrap; /* let the text wrap preserving spaces */
+    }
+
     &:hover {
       box-shadow: 0px 0px 10px #4e4e4e;
       transform: scale(1.02);
