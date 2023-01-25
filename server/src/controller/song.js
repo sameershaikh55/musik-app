@@ -44,6 +44,23 @@ exports.registerSongAudio = catchAsyncErrors(async (req, res, next) => {
   sendResponse(true, 201, "song", song, res);
 });
 
+// GET SONG
+exports.getSong = catchAsyncErrors(async (req, res, next) => {
+  const song = await SongModel.findById(req.params.id);
+  const imageUrl = `${req.protocol}://${req.get("host")}/public/uploads/`;
+
+  sendResponse(
+    true,
+    200,
+    "song",
+    {
+      pictureUrl: imageUrl,
+      song,
+    },
+    res
+  );
+});
+
 // EDIT REGISTERED SONGS
 exports.editSong = catchAsyncErrors(async (req, res, next) => {
   const updatedSong = await SongModel.findByIdAndUpdate(
@@ -58,4 +75,10 @@ exports.editSong = catchAsyncErrors(async (req, res, next) => {
   );
 
   sendResponse(true, 200, "song", updatedSong, res);
+});
+
+// DELETE SONG
+exports.deleteSong = catchAsyncErrors(async (req, res, next) => {
+  const deleteSong = await SongModel.findByIdAndDelete(req.params.id);
+  sendResponse(true, 200, "song", deleteSong, res);
 });

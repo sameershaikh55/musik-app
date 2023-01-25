@@ -27,8 +27,6 @@ exports.getAlbum = catchAsyncErrors(async (req, res, next) => {
   const album = await AlbumModel.findById(req.params.id).populate("songs");
   const imageUrl = `${req.protocol}://${req.get("host")}/public/uploads/`;
 
-  console.log(album);
-
   sendResponse(
     true,
     200,

@@ -31,7 +31,7 @@ const Home = () => {
     <>
       <Header buttonName="Add Album" buttonLink="/add-album" />
 
-      <div className="page_container">
+      <div className="page_container mt-4">
         <div className="container-fluid">
           <div className="row">
             {albums.map((content) => {

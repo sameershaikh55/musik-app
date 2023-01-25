@@ -3,11 +3,19 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 
 // REDUCERS
-import { albumDetailReducer, albumReducer } from "./reducer/album";
+import {
+  albumDetailReducer,
+  albumReducer,
+  createAlbumReducer,
+} from "./reducer/album";
+import { createSongReducer, songDetailReducer } from "./reducer/song";
 
 const reducer = combineReducers({
   albums: albumReducer,
   album: albumDetailReducer,
+  createAlbum: createAlbumReducer,
+  songDetail: songDetailReducer,
+  createSong: createSongReducer,
 });
 
 let initialState = {};

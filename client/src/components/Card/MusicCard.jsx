@@ -1,10 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { deleteSong } from "../../redux/actions/song";
+import { useDispatch, useSelector } from "react-redux";
 import { FaPlay, FaPause } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { GrEdit } from "react-icons/gr";
+import { Link } from "react-router-dom";
 
-const MusicCard = ({ url, name, isPlaying, onPlay, onPause, image }) => {
+const MusicCard = ({
+  url,
+  name,
+  isPlaying,
+  onPlay,
+  onPause,
+  image,
+  albumId,
+  _id,
+}) => {
+  const dispatch = useDispatch();
   const { pictureUrl } = useSelector((state) => state.album);
   const [audio, setAudio] = useState(new Audio(url));
   const [duration, setDuration] = useState(0);
@@ -71,10 +83,15 @@ const MusicCard = ({ url, name, isPlaying, onPlay, onPause, image }) => {
           >
             {isPlaying ? <FaPause /> : <FaPlay />}
           </button>
-          <button className="btn btn-warning px-2">
-            <GrEdit fontSize={25} color="#fff" />
-          </button>
-          <button className="btn btn-danger px-1">
+          <Link to={`/add-song/${albumId}/${_id}`}>
+            <button className="btn btn-warning px-2">
+              <GrEdit fontSize={25} color="#fff" />
+            </button>
+          </Link>
+          <button
+            onClick={() => dispatch(deleteSong(_id))}
+            className="btn btn-danger px-1"
+          >
             <MdDelete fontSize={25} />
           </button>
         </div>

@@ -6,10 +6,12 @@ const Header = ({ buttonName, buttonLink }) => {
     <header className="header_container">
       <div className="container-fluid d-flex align-items-center justify-content-between">
         <div className="text-white">
-          <h2>
-            <span className="text-primary fw800">Musik</span>
-            App
-          </h2>
+          <Link to="/" className="text-decoration-none text-white">
+            <h2>
+              <span className="text-primary fw800">Music</span>
+              App
+            </h2>
+          </Link>
         </div>
         <Link to={buttonLink} className="btn btn-primary add-album-btn">
           {buttonName}

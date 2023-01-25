@@ -5,7 +5,9 @@ import Header from "../components/Header";
 import MusikCard from "../components/Card/MusicCard";
 import Loader from "../components/Loader";
 import { clearErrors, getAlbum } from "../redux/actions/album";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { GrEdit } from "react-icons/gr";
+import { SONG_DELETE_RESET } from "../redux/type/album";
 
 const Album = () => {
   const { id } = useParams();
@@ -13,7 +15,7 @@ const Album = () => {
   const alert = useAlert();
 
   const [currentPlaying, setCurrentPlaying] = useState(null);
-  const { album, songs, pictureUrl, error, loading } = useSelector(
+  const { songsDelete, album, songs, pictureUrl, error, loading } = useSelector(
     (state) => state.album
   );
 
@@ -22,11 +24,16 @@ const Album = () => {
   }, [id, dispatch]);
 
   useEffect(() => {
+    if (songsDelete) {
+      alert.success("Song Deleted!");
+      dispatch({ type: SONG_DELETE_RESET });
+    }
+
     if (error) {
       useAlert.error(error);
       dispatch(clearErrors());
     }
-  }, [dispatch, alert, error]);
+  }, [dispatch, alert, error, songsDelete]);
 
   const handlePlay = (id) => {
     setCurrentPlaying(id);
@@ -42,7 +49,7 @@ const Album = () => {
 
   return (
     <>
-      <Header buttonName="Add Song" buttonLink="/add-song" />
+      <Header buttonName="Add Song" buttonLink={`/add-song/${id}`} />
       <br />
       <br />
       <div className="page_container">
@@ -60,6 +67,12 @@ const Album = () => {
                 <div className="col-8 text-white">
                   <h1>{album.name}</h1>
                   <p>{album.description}</p>
+                  <Link
+                    to={`/add-album/${album._id}`}
+                    className="btn btn-warning"
+                  >
+                    <GrEdit fontSize={25} color="#fff" />
+                  </Link>
                 </div>
 
                 <div className="col-12">
@@ -70,6 +83,7 @@ const Album = () => {
                           <MusikCard
                             {...content}
                             url={pictureUrl + content.audio}
+                            albumId={id}
                             isPlaying={currentPlaying === content._id}
                             onPlay={() => handlePlay(content._id)}
                             onPause={handlePause}

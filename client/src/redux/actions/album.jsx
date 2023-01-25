@@ -6,6 +6,9 @@ import {
   ALBUM_DETAIL_SUCCESS,
   ALBUM_DETAIL_FAIL,
   CLEAR_ERRORS,
+  CREATE_ALBUM_REQUEST,
+  CREATE_ALBUM_SUCCESS,
+  CREATE_ALBUM_FAIL,
 } from "../type/album";
 import axios from "axios";
 
@@ -39,6 +42,31 @@ export const getAlbum = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ALBUM_DETAIL_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+// Create Album
+export const createAlbum = (albumData, id) => async (dispatch) => {
+  try {
+    dispatch({ type: CREATE_ALBUM_REQUEST });
+
+    let data;
+
+    if (id) {
+      data = await axios.put(`api/album/${id}`, albumData);
+    } else {
+      data = await axios.post(`api/album`, albumData);
+    }
+
+    dispatch({
+      type: CREATE_ALBUM_SUCCESS,
+      payload: data.data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: CREATE_ALBUM_FAIL,
       payload: error.response.data.message,
     });
   }
